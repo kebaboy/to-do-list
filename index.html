@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- TODO сделать drag'n'drop -->
     <div class="wrapper">
         <div class="container">
             <div class="to-do-list">
@@ -19,13 +20,23 @@
                     <h2 class="tasks__title">Your tasks</h2>
                     <ul class="tasks__list">
                         <li class="tasks__task task">
-                            <h3 class="task__title">Practice 1</h3>
-                            <button class="task__edit-btn task-btn">E</button>
+                            <h3 class="task__title">Task 1</h3>
+                            <div class="task__date">today</div>
                             <button class="task__delete-btn task-btn">X</button>
                         </li>
-                        
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modal__body">
+            <div class="modal__content">
+                <button class="modal__close">X</button>
+                <input type="text" class="modal__task-title">
+                <textarea class="modal__task-description" name="" id=""></textarea>
+                <div class="modal__task-date">today</div>
+                <button class="modal__add">Add</button>
             </div>
         </div>
     </div>

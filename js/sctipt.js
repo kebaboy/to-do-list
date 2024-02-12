@@ -1,18 +1,16 @@
-function createTask() {
-    let taskTitleContent = document.querySelector(".add-task__input").value;
-
+function createTask(inputValue) {
     let task = document.createElement("li");
     task.classList.add("tasks__task", "task");
 
     let taskTitle = document.createElement("h3");
     taskTitle.classList.add("task__title");
-    taskTitle.textContent = taskTitleContent;
+    taskTitle.textContent = inputValue;
     task.append(taskTitle);
 
-    let taskEditButton = document.createElement("button");
-    taskEditButton.classList.add("task__edit-btn");
-    taskEditButton.textContent = "E";
-    task.append(taskEditButton)
+    let taskData = document.createElement("div");
+    taskData.classList.add("task__date");
+    taskData.textContent = "today";
+    task.append(taskData);
 
     let taskDeleteButton = document.createElement("button");
     taskDeleteButton.classList.add("task__delete-btn");
@@ -26,9 +24,38 @@ function createTask() {
 }
 
 function addTask() {
-    let taskList = document.querySelector(".tasks__list");
+    let taskInput = document.querySelector(".add-task__input");
 
-    let task = createTask();
+    if (taskInput.value.trim() !== "") {
+        let task = createTask(taskInput.value);
+        taskList.append(task);
+    } else {
+        modal.classList.add("open");
+    }
 
-    taskList.append(task);
+
+    taskInput.value = "";
 }
+
+document.querySelector(".add-task__input").addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        addTask();
+    }
+})
+
+modal = document.querySelector(".modal");
+modal.querySelector(".modal__close").addEventListener("click", () => {
+    modal.classList.remove("open");
+})
+taskList = document.querySelector(".tasks__list");
+
+modal.querySelector(".modal__add").addEventListener("click", () => {
+    let taskTitle = document.querySelector(".modal__task-title").value;
+    console.log(taskTitle);
+    let task = createTask(taskTitle);
+    let taskList = document.querySelector(".tasks__list");
+    taskList.append(task);
+    modal.classList.remove("open");
+})
+
+
