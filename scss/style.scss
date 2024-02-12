@@ -1,0 +1,63 @@
+@import "_nullstyle.scss";
+
+.wrapper {
+    min-height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.container {
+    max-width: 500px;
+    margin: 0px auto;
+}
+body {
+    font-size: 24px;
+}
+.to-do-list {
+        display: flex;
+        flex-direction: column;
+        margin: 100px 0px 0px 0px;
+		// .to-do-list__title
+
+		&__title {
+            font-size: 54px;
+            text-align: center;
+            margin: 0px 0px 20px 0px;
+		}
+
+		// .to-do-list__add-task
+
+		&__add-task {
+            
+		}
+
+		// .to-do-list__tasks
+
+		&__tasks {
+		}
+
+		// .to-do-list__list
+
+		&__list {
+            border: 1px solid #000;
+		}
+}
+
+
+.add-task {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightblue;
+    // .add-task__input
+
+    &__input {
+        font-size: 20px;
+        background-color: transparent;
+    }
+
+    // .add-task__btn
+
+    &__btn {
+        font-size: 20px;
+    }
+}
+
