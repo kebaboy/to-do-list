@@ -33,11 +33,6 @@ body {
 		// .to-do-list__tasks
 
 		&__tasks {
-		}
-
-		// .to-do-list__list
-
-		&__list {
             border: 1px solid #000;
 		}
 }
@@ -52,11 +47,13 @@ body {
     &__input {
         font-size: 20px;
         background-color: transparent;
+        width: 100%;
     }
 
     // .add-task__btn
 
     &__btn {
+        padding: 20px;
         font-size: 20px;
     }
 }

@@ -97,7 +97,7 @@ body {
   text-align: center;
   margin: 0px 0px 20px 0px;
 }
-.to-do-list__list {
+.to-do-list__tasks {
   border: 1px solid #000;
 }
 
@@ -109,7 +109,9 @@ body {
 .add-task__input {
   font-size: 20px;
   background-color: transparent;
+  width: 100%;
 }
 .add-task__btn {
+  padding: 20px;
   font-size: 20px;
 }/*# sourceMappingURL=style.css.map */
