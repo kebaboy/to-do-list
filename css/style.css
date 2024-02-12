@@ -97,21 +97,43 @@ body {
   text-align: center;
   margin: 0px 0px 20px 0px;
 }
-.to-do-list__tasks {
-  border: 1px solid #000;
-}
-
 .add-task {
   display: flex;
   justify-content: space-between;
-  background-color: lightblue;
 }
 .add-task__input {
   font-size: 20px;
   background-color: transparent;
   width: 100%;
+  background-color: lightgrey;
+  padding: 10px 15px;
 }
 .add-task__btn {
   padding: 20px;
   font-size: 20px;
+}
+
+.tasks {
+  border: 1px solid #000;
+  padding: 15px 10px;
+}
+.tasks__title {
+  text-align: center;
+  margin: 0px 0px 15px 0px;
+}
+.tasks__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.task {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.task__title {
+  flex: 1 0;
+}
+.task button {
+  padding: 10px;
 }/*# sourceMappingURL=style.css.map */

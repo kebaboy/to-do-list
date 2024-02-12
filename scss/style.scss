@@ -33,7 +33,6 @@ body {
 		// .to-do-list__tasks
 
 		&__tasks {
-            border: 1px solid #000;
 		}
 }
 
@@ -41,13 +40,14 @@ body {
 .add-task {
     display: flex;
     justify-content: space-between;
-    background-color: lightblue;
     // .add-task__input
 
     &__input {
         font-size: 20px;
         background-color: transparent;
         width: 100%;
+        background-color: lightgrey;
+        padding: 10px 15px;
     }
 
     // .add-task__btn
@@ -55,6 +55,56 @@ body {
     &__btn {
         padding: 20px;
         font-size: 20px;
+    }
+}
+
+.tasks {
+    border: 1px solid #000;
+    padding: 15px 10px;
+
+    // .tasks__title
+
+    &__title {
+        text-align: center;
+        margin: 0px 0px 15px 0px;
+    }
+
+    // .tasks__list
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    // .tasks__task
+
+    &__task {
+    }
+}
+
+.task {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    // .task__title
+
+    &__title {
+        flex: 1 0;
+    }
+
+    // .task__edit-btn
+
+    &__edit-btn {
+    }
+
+    // .task__delete-btn
+
+    &__delete-btn {
+    }
+
+    button {
+        padding: 10px;
     }
 }
 
