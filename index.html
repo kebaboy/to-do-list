@@ -14,29 +14,34 @@
                 <h1 class="to-do-list__title">to-do list</h1>
                 <div class="to-do-list__add-task add-task">
                     <input class="add-task__input" type="text" placeholder="New task|">
-                    <button class="add-task__btn" onclick="addTask()">add</button>
+                    <button class="add-task__btn open-popup" data-popup="add-task-popup">add</button>
                 </div>
                 <div class="to-do-list__tasks tasks">
                     <h2 class="tasks__title">Your tasks</h2>
                     <ul class="tasks__list">
                         <li class="tasks__task task">
-                            <h3 class="task__title">Task 1</h3>
-                            <div class="task__date">today</div>
-                            <button class="task__delete-btn task-btn">X</button>
+                            <div class="task__header">
+                                <h3 class="task__title">Task 1</h3>
+                                <div class="task__date">today</div>
+                                <button class="task__delete-btn task-btn">X</button>
+                            </div>
+                            <div class="task__footer">
+                                <div class="task__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti rem dolorum impedit quis mollitia commodi magni cumque adipisci inventore voluptatem!</div>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal">
-        <div class="modal__body">
-            <div class="modal__content">
-                <button class="modal__close">X</button>
-                <input type="text" class="modal__task-title">
-                <textarea class="modal__task-description" name="" id=""></textarea>
-                <div class="modal__task-date">today</div>
-                <button class="modal__add">Add</button>
+    <div id="add-task-popup" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <button class="popup__close close-popup">X</button>
+                <input type="text" class="popup__task-title">
+                <textarea class="popup__task-description" name="" id=""></textarea>
+                <div class="popup__task-date">today</div>
+                <button id="add-task-popup-btn" class="popup__add close-popup">Add</button>
             </div>
         </div>
     </div>
