@@ -129,10 +129,29 @@ body {
 .task {
   position: relative;
 }
+.task .display-none {
+  display: none;
+}
 .task__header {
   display: flex;
   gap: 10px;
   align-items: center;
+  position: relative;
+}
+.task__header::after {
+  content: " ";
+  opacity: 0;
+  transition: all 0.3s ease 0s;
+  position: absolute;
+  top: 50%;
+  left: -3px;
+  right: -3px;
+  height: 2px;
+  background-color: black;
+}
+.task__header.deleted::after {
+  z-index: 11;
+  opacity: 1;
 }
 .task__date {
   font-size: 18px;
@@ -195,6 +214,25 @@ body {
 .popup__task-description {
   font-size: 24px;
   border: 1px solid #000;
+}
+.popup__date-picker {
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-self: center;
+  overflow: hidden;
+  border-radius: 25px;
+}
+.popup__date-picker .active {
+  background-color: rgba(128, 128, 128, 0.668);
+}
+.popup__date-btn {
+  font-size: 20px;
+  padding: 10px 20px;
+  border-right: 1px solid grey;
+}
+.popup__date-btn:last-child {
+  border-right: 0px;
 }
 .popup__close {
   font-size: 20px;

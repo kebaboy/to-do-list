@@ -1,4 +1,4 @@
-function createTask(inputValue, descriptionValue = "") {
+function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     // insertadjacentText
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
@@ -22,14 +22,18 @@ function createTask(inputValue, descriptionValue = "") {
 
     const taskDate = document.createElement("div");
     taskDate.classList.add("task__date");
-    taskDate.textContent = "today";
+    if (dateValue !== "no-date") taskDate.textContent = dateValue;
+    else taskDate.classList.add("display-none");
     task.append(taskDate);
 
     const taskDeleteButton = document.createElement("button");
     taskDeleteButton.classList.add("task__delete-btn");
     taskDeleteButton.textContent = "X";
     taskDeleteButton.onclick = function() {
-        taskDeleteButton.closest(".task").remove();
+        taskDeleteButton.closest(".task__header").classList.add("deleted");
+        setTimeout(function() {
+            taskDeleteButton.closest(".task").remove();
+        }, 800)
     }
     header.append(taskTitle, taskDate, taskDeleteButton);
 
@@ -108,7 +112,7 @@ function constructPopup(task) {
     const editPopup = document.getElementById("edit-task-popup");
     editPopup.querySelector(".popup__task-title").value = task.querySelector(".task__title").textContent;
     editPopup.querySelector(".popup__task-description").value = task.querySelector(".task__description").textContent;
-
+    editPopup.querySelector(`#${task.querySelector(".task__date").textContent}`).classList.add("active");
 }
 
 
@@ -135,12 +139,18 @@ function openPopup(currentPopup) {
         if (closeElement.id === "edit-task-popup-btn") closeElement.addEventListener("click", editTaskHandler);
         else closeElement.addEventListener("click", closePopupHandler);
     }
+    if (currentPopup.querySelector(".popup__date-picker")) currentPopup.querySelector(".popup__date-picker").addEventListener("click", pickDateHandler);
     
     currentPopup.classList.add("open");
 
     currentPopup.addEventListener("mousedown", outsidePopupClickHandler)
 
     
+}
+
+function pickDateHandler(e) {
+    if (e.target.closest(".popup__date-picker").querySelector(".active")) e.target.closest(".popup__date-picker").querySelector(".active").classList.remove("active");
+    e.target.classList.add("active");
 }
 
 function outsidePopupClickHandler(e) {
@@ -159,9 +169,12 @@ function addTaskHandler(event) {
     const addTaskPopup = event.target.closest("#add-task-popup");
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
-    const task = createTask(taskTitle.value, taskDescription.value);
+    const taskDate = addTaskPopup.querySelector(".active");
+    const task = createTask(taskTitle.value, taskDescription.value, taskDate.textContent);
     taskTitle.value = "";
     taskDescription.value = "";
+    addTaskPopup.querySelector(".active").classList.remove("active");
+    addTaskPopup.querySelector("#today").classList.add("active");
     taskList.append(task);
     closePopupHandler(event);
 }
@@ -172,6 +185,14 @@ function editTaskHandler(event) {
         const editTaskPopup = event.target.closest("#edit-task-popup");
         selectedTask.querySelector(".task__title").textContent = editTaskPopup.querySelector(".popup__task-title").value;
         selectedTask.querySelector(".task__description").textContent = editTaskPopup.querySelector(".popup__task-description").value;
+        const dateBtn = editTaskPopup.querySelector(".active");
+        selectedTask.querySelector(".task__date").textContent = dateBtn.textContent;
+        if (dateBtn.textContent !== "no-date" & selectedTask.querySelector(".task__date").classList.contains("display-none")) {
+            selectedTask.querySelector(".task__date").classList.remove("display-none");
+        } else if (dateBtn.textContent === "no-date" & !selectedTask.querySelector(".task__date").classList.contains("display-none")) {
+            selectedTask.querySelector(".task__date").classList.add("display-none");
+        }
+        selectedTask.classList.remove("selected");   
     }
     closePopupHandler(event);
 }
@@ -185,6 +206,13 @@ function closePopup(currentPopup) {
         closeElement.removeEventListener("click", closePopupHandler);
         if (closeElement.id === "add-task-popup-btn") closeElement.removeEventListener("click", addTaskHandler);
         if (closeElement.id === "edit-task-popup-btn") closeElement.removeEventListener("click", editTaskHandler);
+    }
+    if (currentPopup.id === "edit-task-popup") {
+        currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
+        currentPopup.querySelector(".active").classList.remove("active");
+    }
+    if (currentPopup.id === "add-task-popup") {
+        currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
     }
     currentPopup.removeEventListener("mousedown", outsidePopupClickHandler);
 }

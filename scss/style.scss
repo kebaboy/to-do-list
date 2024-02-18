@@ -84,6 +84,11 @@ body {
 }
 
 .task { 
+
+    .display-none {
+        display: none;
+    }
+
     position: relative;
     // .task__header
 
@@ -91,7 +96,33 @@ body {
         display: flex;
         gap: 10px;
         align-items: center;
+        position: relative;
+        &::after {
+            content: " ";
+            opacity: 0;
+            transition: all 0.3s ease 0s;
+            position: absolute;
+            top: 50%;
+            left: -3px;
+            right: -3px;
+            height: 2px;
+            background-color: black;
+        }
+        &.deleted {
+            &::after {
+                z-index: 11;
+                opacity: 1;
+            } 
+        }
+    
     }
+
+    // .deleted {
+    //     &::after {
+    //         z-index: 11;
+    //         opacity: 1;
+    //     } 
+    // }
 
     // .task__title
 
@@ -187,9 +218,31 @@ body {
         border: 1px solid #000;
     }
 
-    // .popup__task-date
+    // .popup__date-picker
 
-    &__task-date {
+    &__date-picker {
+        display: flex;
+        width: fit-content;
+        align-self: center;
+        overflow: hidden;
+        // border-radius: 15px;
+        // border: 1px solid #000;
+        border-radius: 25px;
+
+        .active {
+            background-color: rgba(128, 128, 128, 0.668);
+        }
+    }
+
+    // .popup__date-btn
+
+    &__date-btn {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-right: 1px solid grey;
+        &:last-child {
+            border-right: 0px;
+        }
     }
 
     // .popup__close
