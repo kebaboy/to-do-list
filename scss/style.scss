@@ -61,6 +61,9 @@ body {
 .tasks {
     border: 1px solid #000;
     padding: 15px 10px;
+    transition: all 0.3s ease 0s;
+    max-height: 500px;
+    overflow: auto;
 
     // .tasks__title
 
@@ -99,19 +102,20 @@ body {
         position: relative;
         &::after {
             content: " ";
-            opacity: 0;
+            // opacity: 0;
             transition: all 0.3s ease 0s;
             position: absolute;
             top: 50%;
             left: -3px;
-            right: -3px;
+            right: calc(100% + 3px);
             height: 2px;
             background-color: black;
         }
         &.deleted {
             &::after {
                 z-index: 11;
-                opacity: 1;
+                // opacity: 1;
+                right: -3px;
             } 
         }
     
