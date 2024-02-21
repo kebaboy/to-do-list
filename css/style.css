@@ -81,6 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   max-width: 500px;
   margin: 0px auto;
+  padding: 0px 10px;
 }
 
 body {
@@ -93,7 +94,7 @@ body {
   margin: 100px 0px 0px 0px;
 }
 .to-do-list__title {
-  font-size: 54px;
+  font-size: clamp(2.75rem, 2.625rem + 0.63vw, 3.375rem);
   text-align: center;
   margin: 0px 0px 20px 0px;
 }
