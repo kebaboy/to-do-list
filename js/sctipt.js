@@ -3,7 +3,7 @@ const addTaskPopup = document.getElementById("add-task-popup");
 const editTaskPopup = document.getElementById("edit-task-popup");
 const taskInput = document.querySelector(".add-task__input");
 const completedTaskList = document.querySelector(".completed-tasks__list");
-const completedTasks = completedTaskList.getElementsByClassName("completed-tasks__task");
+const completedTasks = completedTaskList.getElementsByClassName("task");
 const completedTasksCount = document.querySelector(".completed-tasks__title");
 
 function addTask() {
@@ -37,13 +37,13 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
 
     const taskDeleteButton = document.createElement("button");
     taskDeleteButton.classList.add("task__delete-btn");
-    taskDeleteButton.textContent = "X";
+    taskDeleteButton.textContent = "✓";
     taskDeleteButton.onclick = function() {
         taskDeleteButton.closest(".task__header").classList.add("deleted");
         setTimeout(function() {
-            const completedTask = createCompletedTask(taskTitle.textContent);
+            const task = taskDeleteButton.closest(".task");
             taskDeleteButton.closest(".task").remove();
-            completedTaskList.append(completedTask);
+            completedTaskList.append(task);
             const count = completedTasks.length;
             completedTasksCount.textContent = `Completed (${count})`;
 
@@ -242,6 +242,8 @@ function closePopup(currentPopup) {
     if (currentPopup.id === "edit-task-popup") {
         currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
         currentPopup.querySelector(".active").classList.remove("active");
+        const selectedTask = document.querySelector(".selected");
+        if (selectedTask) selectedTask.classList.remove("selected");
     }
     if (currentPopup.id === "add-task-popup") {
         currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
@@ -255,6 +257,10 @@ document.addEventListener('keydown', function(event) {
     }
 })
 
-document.querySelector(".completed-tasks__header").addEventListener("click", () => {
+const completedTaskHeader = document.querySelector(".completed-tasks__header");
+
+completedTaskHeader.addEventListener("click", () => {
+    const symbol = completedTaskHeader.querySelector("span");
+    symbol.textContent = symbol.textContent === "+" ? "-" : "+";
     completedTaskList.classList.toggle("show");
 })

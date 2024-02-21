@@ -140,13 +140,32 @@ body {
         transition: all 0.8s ease 0s;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         font-size: 13px;
+        .task__date, .task__description, .task__delete-btn {
+            display: none;
+        }
+        .task__header::after {
+            opacity: 0;
+        }
+        .task__title {
+            position: relative;
+            &::after {
+                content: " ";
+                position: absolute;
+                top: 50%;
+                left: -3px;
+                right: -3px;
+                height: 2px;
+                background-color: rgba(0,0,0,0.7);
+            }
+        }
+
     }
 
     .show {
         max-height: 500px;
-        padding: 10px 10px 0px 10px;
+        padding: 10px 10px 1px 10px;
         font-size: 20px;
     }
 }
@@ -154,7 +173,14 @@ body {
 
 
 .task { 
+    padding: 5px 5px 0px 5px;
     background-color: white;
+    transition: background-color 0.3s ease 0s;
+    @media (any-hover: hover) {
+        &:hover {
+            background-color: rgba(0,0,0,0.1);;
+        }
+    }
     .display-none {
         display: none;
     }
@@ -188,13 +214,6 @@ body {
     
     }
 
-    // .deleted {
-    //     &::after {
-    //         z-index: 11;
-    //         opacity: 1;
-    //     } 
-    // }
-
     // .task__title
 
     &__title {
@@ -215,9 +234,11 @@ body {
 
     &__delete-btn {
         margin: 0px 0px 0px auto;
-        padding: 10px;
+        padding: 3px 6px;
+        font-size: 23px;
         position: relative;
         z-index: 10;
+        border-radius: 15px;
     }
 
     // .task__footer
@@ -274,7 +295,7 @@ body {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding: 30px;
+        padding: 30px clamp(0.938rem, 0.382rem + 2.78vw, 2.5rem);
         position: relative;
         opacity: 0;
         transition: all 0.3s ease 0s;
@@ -307,6 +328,7 @@ body {
         // border-radius: 15px;
         // border: 1px solid #000;
         border-radius: 25px;
+        margin: 0px 0px 15px 0px;
 
         .active {
             background-color: rgba(128, 128, 128, 0.668);
@@ -317,7 +339,7 @@ body {
 
     &__date-btn {
         font-size: 20px;
-        padding: 10px 20px;
+        padding: 10px clamp(0.625rem, 0.403rem + 1.11vw, 1.25rem);
         border-right: 1px solid grey;
         &:last-child {
             border-right: 0px;
@@ -327,11 +349,12 @@ body {
     // .popup__close
 
     &__close {
-        font-size: 20px;
+        font-size: 45px;
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: -12px;
+        right: 0px;
         background-color: transparent;
+        transform: rotate(45deg);
     }
 
     // .popup__add
@@ -339,6 +362,7 @@ body {
     &__add {
         font-size: 24px;
         margin: auto 0px 0px 0px;
+        padding: 10px 0px;
     }
 
 }
