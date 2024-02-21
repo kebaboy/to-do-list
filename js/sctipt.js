@@ -4,7 +4,6 @@ const editTaskPopup = document.getElementById("edit-task-popup");
 const taskInput = document.querySelector(".add-task__input");
 const completedTaskList = document.querySelector(".completed-tasks__list");
 const completedTasks = completedTaskList.getElementsByClassName("completed-tasks__task");
-console.log(completedTasks.length);
 const completedTasksCount = document.querySelector(".completed-tasks__title");
 
 function addTask() {

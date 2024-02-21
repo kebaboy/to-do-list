@@ -268,7 +268,7 @@ body {
     // .popup__content
 
     &__content {
-        min-width: 500px;
+        flex: 0 1 500px;
         background-color: white;
         min-height: 300px;
         display: flex;
