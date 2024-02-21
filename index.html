@@ -14,12 +14,12 @@
                 <h1 class="to-do-list__title open-popup" data-popup="add-task-popup2">to-do list</h1>
                 <div class="to-do-list__add-task add-task">
                     <input class="add-task__input" type="text" placeholder="New task">
-                    <button class="add-task__btn open-popup" data-popup="add-task-popup">add</button>
+                    <button class="add-task__btn open-popup" data-popup="add-task-popup">+</button>
                 </div>
                 <div class="to-do-list__tasks tasks">
                     <h2 class="tasks__title">Your tasks</h2>
                     <ul class="tasks__list">
-                        <li class="tasks__task task open-popup" data-popup="edit-task-popup">
+                        <!-- <li class="tasks__task task open-popup" data-popup="edit-task-popup" draggable="true">
                             <div class="task__header">
                                 <h3 class="task__title">Task 1</h3>
                                 <div class="task__date">today</div>
@@ -28,8 +28,17 @@
                             <div class="task__footer">
                                 <div class="task__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti rem dolorum impedit quis mollitia commodi magni cumque adipisci inventore voluptatem!</div>
                             </div>
-                        </li>
+                        </li> -->
+                        
                     </ul>
+                    <div class="tasks__completed completed-tasks">
+                        <div class="completed-tasks__header">
+                            <h3 class="completed-tasks__title">Completed (0)</h3>
+                            <span>+</span>
+                        </div>
+                        <ul class="completed-tasks__list">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

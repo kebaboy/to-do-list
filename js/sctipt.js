@@ -1,7 +1,11 @@
 const taskList = document.querySelector(".tasks__list");
 const addTaskPopup = document.getElementById("add-task-popup");
 const editTaskPopup = document.getElementById("edit-task-popup");
-const taskInput = document.querySelector(".add-task__input")
+const taskInput = document.querySelector(".add-task__input");
+const completedTaskList = document.querySelector(".completed-tasks__list");
+const completedTasks = completedTaskList.getElementsByClassName("completed-tasks__task");
+console.log(completedTasks.length);
+const completedTasksCount = document.querySelector(".completed-tasks__title");
 
 function addTask() {
     if (taskInput.value.trim() !== "") {
@@ -18,6 +22,7 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
     task.dataset.popup = "edit-task-popup";
+    task.draggable = true;
 
     const header = document.createElement("div");
     header.classList.add("task__header");
@@ -37,7 +42,12 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     taskDeleteButton.onclick = function() {
         taskDeleteButton.closest(".task__header").classList.add("deleted");
         setTimeout(function() {
+            const completedTask = createCompletedTask(taskTitle.textContent);
             taskDeleteButton.closest(".task").remove();
+            completedTaskList.append(completedTask);
+            const count = completedTasks.length;
+            completedTasksCount.textContent = `Completed (${count})`;
+
         }, 800)
     }
     header.append(taskTitle, taskDate, taskDeleteButton);
@@ -52,17 +62,46 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     footer.append(description);
 
     task.append(header, footer);
+
+
     task.addEventListener("click", function(e) {
         if (!e.target.classList.contains('task__delete-btn')) {
-            task.classList.add("selected");
-            const popup = document.getElementById("edit-task-popup");
-            constructPopup(task);
-            openPopup(popup);
+            editTask(task);
+        }
+    });
+    task.addEventListener("dragstart", (event) => {
+        draggedItem = event.target;
+    });
+    task.addEventListener("dragover", (event) => {
+        event.preventDefault();
+    });
+    task.addEventListener("drop", (event) => {
+        if (draggedItem) {
+            event.preventDefault();
+            const targetItem = event.target.closest('li');
+            if (targetItem && targetItem !== draggedItem) {
+                const targetIndex = Array.from(taskList.children).indexOf(targetItem);
+                const draggedIndex = Array.from(taskList.children).indexOf(draggedItem);
+                if (targetIndex > draggedIndex) {
+                    taskList.insertBefore(draggedItem, targetItem.nextSibling);
+                } else {
+                    taskList.insertBefore(draggedItem, targetItem);
+                }
+            }
+            draggedItem = null;
         }
     });
 
     return task;
 }
+
+function createCompletedTask(title) {
+    const task = document.createElement("li");
+    task.textContent = title;
+    task.classList.add("completed-tasks__task");
+    return task;
+}
+
 
 function editTask(openElement) {
     openElement.classList.add("selected");
@@ -70,16 +109,54 @@ function editTask(openElement) {
     openPopup(editTaskPopup);
 }
 
+let draggedItem = null;
+
 const openElements = document.querySelectorAll(".open-popup");
 for (const openElement of openElements) {
     const targetPopupId = openElement.dataset.popup;
     if (targetPopupId === "add-task-popup") {
         openElement.addEventListener("click", addTask);
     } else if (targetPopupId === "edit-task-popup") {
-        openElement.addEventListener("click", () => editTask(openElement));
+        openElement.addEventListener("click", (event) => {
+            if (!event.target.classList.contains('task__delete-btn')) {
+                editTask(openElement);
+            }
+        });
+        openElement.addEventListener("dragstart", (event) => {
+            draggedItem = event.target;
+        });
+        openElement.addEventListener("dragover", (event) => {
+            event.preventDefault();
+        })
+        openElement.addEventListener("drop", (event) => {
+            if (draggedItem) {
+                event.preventDefault();
+                const targetItem = event.target.closest('li');
+                if (targetItem && targetItem !== draggedItem) {
+                    const targetIndex = Array.from(taskList.children).indexOf(targetItem);
+                    const draggedIndex = Array.from(taskList.children).indexOf(draggedItem);
+                    if (targetIndex > draggedIndex) {
+                        taskList.insertBefore(draggedItem, targetItem.nextSibling);
+                    } else {
+                        taskList.insertBefore(draggedItem, targetItem);
+                    }
+                }
+                draggedItem = null;
+            }
+        });
     } else {
         openElement.addEventListener("click", () => openPopup(document.getElementById(`${targetPopupId}`)));
     }
+}
+
+function dragFunction(event, openElement) {
+    openElement.style.top = event.clientY + 'px';
+    openElement.style.left = event.clientX + 'px';
+}
+
+function stopDrapFunction(openElement) {
+    openElement.classList.remove("drag");
+    document.removeEventListener()
 }
 
 
@@ -177,4 +254,8 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         addTask();
     }
+})
+
+document.querySelector(".completed-tasks__header").addEventListener("click", () => {
+    completedTaskList.classList.toggle("show");
 })
