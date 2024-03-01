@@ -1,5 +1,8 @@
 @import "_nullstyle.scss";
 
+//! сделать чтобы удаленные вопросы типо выдвигались слева лэзи лоэд
+//! поработать с аустыми падингами
+
 .wrapper {
     min-height: 100%;
     width: 100%;
@@ -211,12 +214,12 @@ body {
                 right: -3px;
             } 
         }
-    
     }
 
     // .task__title
 
     &__title {
+        word-break: break-all;
     }
 
     // .task__date
@@ -251,8 +254,9 @@ body {
 
     &__description {
         font-size: 18px;
-        padding: 5px 40px 0px 20px;
+        padding: 5px 40px 5px 20px;
         color: gray;
+        word-break: break-all;
     }
 }
 

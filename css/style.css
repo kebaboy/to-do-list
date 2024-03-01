@@ -226,6 +226,9 @@ body {
   z-index: 11;
   right: -3px;
 }
+.task__title {
+  word-break: break-all;
+}
 .task__date {
   font-size: 18px;
   padding: 2px 7px;
@@ -244,8 +247,9 @@ body {
 }
 .task__description {
   font-size: 18px;
-  padding: 5px 40px 0px 20px;
+  padding: 5px 40px 5px 20px;
   color: gray;
+  word-break: break-all;
 }
 
 .drag {
