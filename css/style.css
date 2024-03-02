@@ -247,9 +247,12 @@ body {
 }
 .task__description {
   font-size: 18px;
-  padding: 5px 40px 5px 20px;
+  padding: 5px 20px 5px 20px;
   color: gray;
   word-break: break-all;
+}
+.task__description-reduced {
+  display: none;
 }
 
 .drag {

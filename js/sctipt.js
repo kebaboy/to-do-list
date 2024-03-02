@@ -1,3 +1,6 @@
+const DESC_MAX_LENGTH = 73;
+
+
 const taskList = document.querySelector(".tasks__list");
 const addTaskPopup = document.getElementById("add-task-popup");
 const editTaskPopup = document.getElementById("edit-task-popup");
@@ -54,11 +57,19 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     const footer = document.createElement("div");
     footer.classList.add("task__footer");
 
+    const descriptionReduced = document.createElement("div");
+    descriptionReduced.classList.add("task__description-reduced");
+    descriptionReduced.textContent = descriptionValue;
+
     const description = document.createElement("div");
     description.classList.add("task__description");
-    description.textContent = descriptionValue;
+    if (descriptionValue.length > DESC_MAX_LENGTH) {
+        description.textContent = descriptionValue.slice(0, DESC_MAX_LENGTH + 1) + "...";
+    } else {description.textContent = descriptionValue}
+
 
     footer.append(description);
+    footer.append(descriptionReduced);
 
     task.append(header, footer);
 
@@ -162,7 +173,7 @@ function stopDrapFunction(openElement) {
 
 function constructPopup(task) {
     editTaskPopup.querySelector(".popup__task-title").value = task.querySelector(".task__title").textContent;
-    editTaskPopup.querySelector(".popup__task-description").value = task.querySelector(".task__description").textContent;
+    editTaskPopup.querySelector(".popup__task-description").value = task.querySelector(".task__description-reduced").textContent;
     editTaskPopup.querySelector(`#${task.querySelector(".task__date").textContent}`).classList.add("active");
 }
 
@@ -216,7 +227,13 @@ function editTaskHandler(event) {
     const selectedTask = document.querySelector(".selected");
     if (selectedTask) {
         selectedTask.querySelector(".task__title").textContent = editTaskPopup.querySelector(".popup__task-title").value;
-        selectedTask.querySelector(".task__description").textContent = editTaskPopup.querySelector(".popup__task-description").value;
+        const descriptionReduced = selectedTask.querySelector(".task__description-reduced");
+        descriptionReduced.textContent = editTaskPopup.querySelector(".popup__task-description").value;
+        const description = selectedTask.querySelector(".task__description");
+        if (descriptionReduced.textContent.length > DESC_MAX_LENGTH) {
+            description.textContent = descriptionReduced.textContent.slice(0, DESC_MAX_LENGTH + 1) + "...";
+        } else {description.textContent = descriptionReduced.textContent}
+    
         const dateBtn = editTaskPopup.querySelector(".active");
         selectedTask.querySelector(".task__date").textContent = dateBtn.textContent;
         if (dateBtn.textContent !== "no-date" & selectedTask.querySelector(".task__date").classList.contains("display-none")) {
