@@ -1,5 +1,22 @@
 const DESC_MAX_LENGTH = 73;
 
+const date = document.querySelector(".to-do-list__day-month-year");
+const time = document.querySelector(".to-do-list__time")
+
+function updatetimeAndDate() {
+    let dateObj = new Date();
+    date.textContent = ['0'+dateObj.getDate(), '0'+(dateObj.getMonth()+1), ''+dateObj.getFullYear()].map(item => item.slice(-2)).join(".");
+    time.textContent = ['0'+dateObj.getHours(), '0'+(dateObj.getMinutes())].map(item => item.slice(-2)).join(":");
+}
+
+setInterval(updatetimeAndDate, 60000);
+updatetimeAndDate();
+
+
+
+
+
+
 
 const taskList = document.querySelector(".tasks__list");
 const addTaskPopup = document.getElementById("add-task-popup");
