@@ -33,12 +33,11 @@ body {
         &__date {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             gap: 10px;
             margin: 0px 0px 3px 0px;
             font-size: 17px;
             color: rgba(0,0,0,0.3);
-            padding: 0px 10px;
         }
 
         // .to-do-list__day-month-year
@@ -54,7 +53,9 @@ body {
 		// .to-do-list__add-task
 
 		&__add-task {
-            
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 0px 0px 15px 0px;
 		}
 
 		// .to-do-list__tasks
@@ -82,11 +83,12 @@ body {
         font-size: 25px;
         width: 50px;
         aspect-ratio: 1 / 1;
+        line-height: 0px;
     }
 }
 
 .tasks {
-    border: 1px solid #000;
+    border: 1px solid rgba(0,0,0,0.3);
     padding: 15px 10px;
     transition: all 0.3s ease 0s;
     max-height: 500px;
@@ -338,7 +340,8 @@ body {
     // .popup__task-title
 
     &__task-title {
-        border: 1px solid #000;
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 25px;
         font-size: 24px;
         padding: 10px;
     }
@@ -348,7 +351,10 @@ body {
     &__task-description {
         padding: 10px;
         font-size: 24px;
-        border: 1px solid #000;
+        border: 1px solid rgba(0,0,0,0.3); 
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 10px;
+        color: rgba(0,0,0,0.5);
     }
 
     // .popup__date-picker
