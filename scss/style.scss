@@ -220,6 +220,7 @@ body {
 .task { 
     padding: 5px 5px 5px 5px;
     background-color: white;
+    border-radius: 7px;
     transition: background-color 0.3s ease 0s;
     @media (any-hover: hover) {
         &:hover {
