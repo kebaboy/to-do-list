@@ -114,7 +114,7 @@ body {
 }
 .to-do-list__add-task {
   position: relative;
-  z-index: -1;
+  z-index: 1;
   margin: 0px 0px 15px 0px;
   transform: translate(0px, 35px);
   opacity: 0;
@@ -124,6 +124,10 @@ body {
   transform: translate(0px, 0px);
   opacity: 1;
 }
+.to-do-list__tasks {
+  z-index: 2;
+}
+
 .add-task {
   display: flex;
   border-radius: 25px;
