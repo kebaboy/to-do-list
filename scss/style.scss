@@ -38,6 +38,11 @@ body {
             margin: 0px 0px 3px 0px;
             font-size: 17px;
             color: rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: all 1s ease 1s;
+        }
+        &__date.visible {
+            opacity: 1;
         }
 
         // .to-do-list__day-month-year
@@ -53,10 +58,18 @@ body {
 		// .to-do-list__add-task
 
 		&__add-task {
-            border-radius: 25px;
-            overflow: hidden;
+            position: relative;
+            z-index: -1;
             margin: 0px 0px 15px 0px;
+            transform: translate(0px, 35px);
+            opacity: 0;
+            transition: all 1s ease 0s;
 		}
+
+        .add-task.visible {
+            transform: translate(0px, 0px);
+            opacity: 1;
+        }
 
 		// .to-do-list__tasks
 
@@ -67,6 +80,8 @@ body {
 
 .add-task {
     display: flex;
+    border-radius: 25px;
+    overflow: hidden;
     // .add-task__input
 
     &__input {
@@ -88,8 +103,10 @@ body {
 }
 
 .tasks {
+    background-color: white;
     border: 1px solid rgba(0,0,0,0.3);
-    padding: 15px 10px;
+    border-radius: 7px;
+    padding: 15px 10px 10px 10px;
     transition: all 0.3s ease 0s;
     max-height: 500px;
     overflow: auto;
@@ -324,7 +341,7 @@ body {
     // .popup__content
 
     &__content {
-        flex: 0 1 500px;
+        flex: 0 1 600px;
         background-color: white;
         min-height: 300px;
         display: flex;

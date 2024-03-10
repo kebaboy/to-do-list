@@ -26,6 +26,11 @@ const completedTaskList = document.querySelector(".completed-tasks__list");
 const completedTasks = completedTaskList.getElementsByClassName("task");
 const completedTasksCount = document.querySelector(".completed-tasks__title");
 
+document.addEventListener("DOMContentLoaded", function() {
+        taskInput.closest(".add-task").classList.add("visible");
+        date.closest(".to-do-list__date").classList.add("visible");
+})
+
 function addTask() {
     if (taskInput.value.trim() !== "") {
         const task = createTask(taskInput.value);
@@ -87,6 +92,7 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
 
     footer.append(description);
     footer.append(descriptionReduced);
+    if (description.textContent === '') footer.classList.add("display-none");
 
     task.append(header, footer);
 
@@ -250,6 +256,7 @@ function editTaskHandler(event) {
         if (descriptionReduced.textContent.length > DESC_MAX_LENGTH) {
             description.textContent = descriptionReduced.textContent.slice(0, DESC_MAX_LENGTH + 1) + "...";
         } else {description.textContent = descriptionReduced.textContent}
+        description.textContent.trim() ? description.closest(".task__footer").classList.remove("display-none") : description.closest(".task__footer").classList.add("display-none");
     
         const dateBtn = editTaskPopup.querySelector(".active");
         selectedTask.querySelector(".task__date").textContent = dateBtn.textContent;
