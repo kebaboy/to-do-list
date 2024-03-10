@@ -173,7 +173,7 @@ body {
 .tasks__list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   margin: 0px 0px 10px 0px;
 }
 .completed-tasks__header {
@@ -228,7 +228,7 @@ body {
 }
 
 .task {
-  padding: 5px 5px 0px 5px;
+  padding: 5px 5px 5px 5px;
   background-color: white;
   transition: background-color 0.3s ease 0s;
   position: relative;
@@ -282,7 +282,7 @@ body {
 }
 .task__description {
   font-size: 18px;
-  padding: 5px 20px 5px 20px;
+  padding: 0px 35px 0px 20px;
   color: gray;
   word-break: break-all;
 }

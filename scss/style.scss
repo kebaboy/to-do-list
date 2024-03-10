@@ -1,7 +1,6 @@
 @import "_nullstyle.scss";
 
 //! сделать чтобы удаленные вопросы типо выдвигались слева лэзи лоэд
-//! поработать с аустыми падингами
 
 .wrapper {
     min-height: 100%;
@@ -134,7 +133,7 @@ body {
     &__list {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         margin: 0px 0px 10px 0px;
     }
 
@@ -219,7 +218,7 @@ body {
 
 
 .task { 
-    padding: 5px 5px 0px 5px;
+    padding: 5px 5px 5px 5px;
     background-color: white;
     transition: background-color 0.3s ease 0s;
     @media (any-hover: hover) {
@@ -239,6 +238,7 @@ body {
         gap: 10px;
         align-items: center;
         position: relative;
+        // margin: 0px 0px 5px 0px;
         &::after {
             content: " ";
             // opacity: 0;
@@ -297,7 +297,7 @@ body {
 
     &__description {
         font-size: 18px;
-        padding: 5px 20px 5px 20px;
+        padding: 0px 35px 0px 20px;
         color: gray;
         word-break: break-all;
     }
