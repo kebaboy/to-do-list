@@ -26,9 +26,11 @@ const completedTaskList = document.querySelector(".completed-tasks__list");
 const completedTasks = completedTaskList.getElementsByClassName("task");
 const completedTasksCount = document.querySelector(".completed-tasks__title");
 
+
 document.addEventListener("DOMContentLoaded", function() {
         taskInput.closest(".add-task").classList.add("visible");
         date.closest(".to-do-list__date").classList.add("visible");
+        document.querySelector(".tasks__title").classList.add("visible");
 })
 
 function addTask() {
