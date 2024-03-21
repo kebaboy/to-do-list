@@ -3,18 +3,23 @@ const DESC_MAX_LENGTH = 73;
 const date = document.querySelector(".to-do-list__day-month-year");
 const time = document.querySelector(".to-do-list__time")
 
-function updatetimeAndDate() {
+function updateTimeAndDate() {
     let dateObj = new Date();
     date.textContent = ['0'+dateObj.getDate(), '0'+(dateObj.getMonth()+1), ''+dateObj.getFullYear()].map(item => item.slice(-2)).join(".");
     time.textContent = ['0'+dateObj.getHours(), '0'+(dateObj.getMinutes())].map(item => item.slice(-2)).join(":");
 }
 
-setInterval(updatetimeAndDate, 60000);
-updatetimeAndDate();
+setInterval(updateTimeAndDate, 60000);
+updateTimeAndDate();
 
 
 
-
+document.querySelector(".popup__add").addEventListener("focus", () => {
+    console.log("focus");
+})
+document.querySelector(".popup__add").addEventListener("focusout", () => {
+    console.log("focusout");
+})
 
 
 
@@ -236,6 +241,7 @@ function closePopupHandler(event) {
 }
 
 function addTaskHandler(event) {
+    console.log('hi');
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
     const taskDate = addTaskPopup.querySelector(".active");
@@ -278,7 +284,10 @@ function closePopup(currentPopup) {
 
     const closeElements = currentPopup.querySelectorAll(".close-popup");
     for (const closeElement of closeElements) {
-        if (closeElement.id === "add-task-popup-btn") closeElement.removeEventListener("click", addTaskHandler);
+        if (closeElement.id === "add-task-popup-btn") {
+            closeElement.removeEventListener("click", addTaskHandler);
+            closeElement.blur();
+        }
         if (closeElement.id === "edit-task-popup-btn") closeElement.removeEventListener("click", editTaskHandler);
         else closeElement.removeEventListener("click", closePopupHandler);
     }
@@ -295,7 +304,7 @@ function closePopup(currentPopup) {
 }
 
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !addTaskPopup.classList.contains("open")) {
         addTask();
     }
 })

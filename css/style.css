@@ -141,6 +141,11 @@ body {
   background-color: lightgrey;
   padding: 10px 15px;
 }
+.add-task__input:focus {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
 .add-task__btn {
   font-size: 25px;
   width: 50px;
@@ -148,9 +153,11 @@ body {
   line-height: 0px;
   transition: all 0.3s ease 0s;
 }
-.add-task__btn:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+@media (any-hover: hover) {
+  .add-task__btn:hover, .add-task__btn:focus {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
 }
 
 .tasks {
@@ -292,6 +299,12 @@ body {
   z-index: 10;
   border-radius: 15px;
 }
+@media (any-hover: hover) {
+  .task__delete-btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
+}
 .task__description {
   font-size: 18px;
   padding: 0px 35px 0px 20px;
@@ -388,6 +401,12 @@ body {
   font-size: 24px;
   margin: auto 0px 0px 0px;
   padding: 10px 0px;
+}
+@media (any-hover: hover) {
+  .popup__add:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
 }
 
 .open {
