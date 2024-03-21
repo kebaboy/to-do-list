@@ -392,6 +392,10 @@ body {
         padding: 10px;
     }
 
+    &__task-title.error {
+        border: 1px solid rgba(255,0,0,0.5);
+    }
+
     // .popup__task-description
 
     &__task-description {

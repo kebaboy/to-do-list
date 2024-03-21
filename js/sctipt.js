@@ -14,15 +14,6 @@ updateTimeAndDate();
 
 
 
-document.querySelector(".popup__add").addEventListener("focus", () => {
-    console.log("focus");
-})
-document.querySelector(".popup__add").addEventListener("focusout", () => {
-    console.log("focusout");
-})
-
-
-
 const taskList = document.querySelector(".tasks__list");
 const addTaskPopup = document.getElementById("add-task-popup");
 const editTaskPopup = document.getElementById("edit-task-popup");
@@ -212,10 +203,10 @@ function openPopup(currentPopup) {
     const closeElements = currentPopup.querySelectorAll(".close-popup");
     for (const closeElement of closeElements) {
         if (closeElement.id === "add-task-popup-btn") closeElement.addEventListener("click", addTaskHandler);
-        if (closeElement.id === "edit-task-popup-btn") closeElement.addEventListener("click", editTaskHandler);
+        else if (closeElement.id === "edit-task-popup-btn") closeElement.addEventListener("click", editTaskHandler);
         else closeElement.addEventListener("click", closePopupHandler);
     }
-    const datePicker = currentPopup.querySelector(".popup__date-picker");
+    const datePicker = currentPopup.querySelector(".popup__date-picker");  
     if (datePicker) datePicker.addEventListener("click", pickDateHandler);
     
     currentPopup.classList.add("open");
@@ -240,13 +231,23 @@ function closePopupHandler(event) {
     if (popup) closePopup(popup);
 }
 
+function validateTask(event) {
+    const taskTitle = event.target.closest(".popup__content").querySelector(".popup__task-title");
+    if (!taskTitle.value.trim()) {
+        taskTitle.classList.add("error");
+        return false;
+    } else return true;
+}
+
 function addTaskHandler(event) {
-    console.log('hi');
+    if (!validateTask(event)) return;
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
     const taskDate = addTaskPopup.querySelector(".active");
     const task = createTask(taskTitle.value, taskDescription.value, taskDate.textContent);
+    // сдлеать clear либо в закрытии окна    либо здесь
     taskTitle.value = "";
+    taskTitle.classList.remove("error");
     taskDescription.value = "";
     addTaskPopup.querySelector(".active").classList.remove("active");
     addTaskPopup.querySelector("#today").classList.add("active");
@@ -255,6 +256,7 @@ function addTaskHandler(event) {
 }
 
 function editTaskHandler(event) {
+    if (!validateTask(event)) return;
     const selectedTask = document.querySelector(".selected");
     if (selectedTask) {
         selectedTask.querySelector(".task__title").textContent = editTaskPopup.querySelector(".popup__task-title").value;
@@ -281,6 +283,7 @@ function editTaskHandler(event) {
 
 function closePopup(currentPopup) {
     currentPopup.classList.remove("open");
+    currentPopup.querySelector(".popup__task-title").classList.remove("error");
 
     const closeElements = currentPopup.querySelectorAll(".close-popup");
     for (const closeElement of closeElements) {
