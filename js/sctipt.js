@@ -39,7 +39,7 @@ function addTask() {
     }
 }
 
-
+// можно заменить на объект и = {}
 function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
@@ -319,3 +319,5 @@ completedTaskHeader.addEventListener("click", () => {
     symbol.textContent = symbol.textContent === "+" ? "-" : "+";
     completedTaskList.classList.toggle("show");
 })
+
+fetch("json/tasks.json").then(response => response.json().then(tasks => taskList.append(createTask(tasks[0].title, tasks[0].description, tasks[0].date))));
