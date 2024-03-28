@@ -72,6 +72,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------*/
+body {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .wrapper {
   min-height: 100%;
   width: 100%;
@@ -84,11 +89,23 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px 10px;
 }
 
-body {
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
+.loader {
+  border: 5px solid #f3f3f3;
+  animation: spin 1s linear infinite;
+  border-top: 5px solid #555;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .to-do-list {
   display: flex;
   flex-direction: column;
@@ -193,6 +210,9 @@ body {
   flex-direction: column;
   gap: 5px;
   margin: 0px 0px 10px 0px;
+}
+.tasks__loader {
+  align-self: center;
 }
 .completed-tasks__header {
   display: flex;

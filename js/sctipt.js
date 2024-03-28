@@ -2,8 +2,9 @@ const TASKS__URL = "json/tasks.json";
 const taskList = document.querySelector(".tasks__list");
 
 async function uploadTasks() {
-    let tasks = await fetch(TASKS__URL).then(resp => resp.json());
-
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let response = await fetch(TASKS__URL);
+    let tasks = await response.json();
     tasks.forEach(taskObj => {
         let task = createTask(taskObj);
         taskList.append(task);
@@ -38,6 +39,7 @@ const DESC_MAX_LENGTH = 73;
 
 document.addEventListener("DOMContentLoaded", function() {
     uploadTasks().finally(() => {
+        taskList.querySelector(".loader").style.display = "none";
         taskInput.closest(".add-task").classList.add("visible");
         date.closest(".to-do-list__date").classList.add("visible");
         document.querySelector(".tasks__title").classList.add("visible");
