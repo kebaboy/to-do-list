@@ -1,4 +1,17 @@
-const DESC_MAX_LENGTH = 73;
+const TASKS__URL = "json/tasks.json";
+const taskList = document.querySelector(".tasks__list");
+
+async function uploadTasks() {
+    let tasks = await fetch(TASKS__URL).then(resp => resp.json());
+
+    tasks.forEach(taskObj => {
+        let task = createTask(taskObj);
+        taskList.append(task);
+    })
+}
+
+
+
 
 const date = document.querySelector(".to-do-list__day-month-year");
 const time = document.querySelector(".to-do-list__time")
@@ -13,8 +26,6 @@ setInterval(updateTimeAndDate, 60000);
 updateTimeAndDate();
 
 
-
-const taskList = document.querySelector(".tasks__list");
 const addTaskPopup = document.getElementById("add-task-popup");
 const editTaskPopup = document.getElementById("edit-task-popup");
 const taskInput = document.querySelector(".add-task__input");
@@ -22,16 +33,20 @@ const completedTaskList = document.querySelector(".completed-tasks__list");
 const completedTasks = completedTaskList.getElementsByClassName("task");
 const completedTasksCount = document.querySelector(".completed-tasks__title");
 
+const DESC_MAX_LENGTH = 73;
+
 
 document.addEventListener("DOMContentLoaded", function() {
+    uploadTasks().finally(() => {
         taskInput.closest(".add-task").classList.add("visible");
         date.closest(".to-do-list__date").classList.add("visible");
         document.querySelector(".tasks__title").classList.add("visible");
+    })
 })
 
 function addTask() {
     if (taskInput.value.trim() !== "") {
-        const task = createTask(taskInput.value);
+        const task = createTask({title: taskInput.value});
         taskList.append(task);
         taskInput.value = "";
     } else {
@@ -40,7 +55,7 @@ function addTask() {
 }
 
 // можно заменить на объект и = {}
-function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
+function createTask({title, description = "", date = "no-date"}) {
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
     task.dataset.popup = "edit-task-popup";
@@ -51,12 +66,12 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
 
     const taskTitle = document.createElement("h3");
     taskTitle.classList.add("task__title");
-    taskTitle.textContent = inputValue;
+    taskTitle.textContent = title;
 
     const taskDate = document.createElement("div");
     taskDate.classList.add("task__date");
-    taskDate.textContent = dateValue;
-    if (dateValue === "no-date") taskDate.classList.add("display-none");
+    taskDate.textContent = date;
+    if (date === "no-date") taskDate.classList.add("display-none");
 
     const taskDeleteButton = document.createElement("button");
     taskDeleteButton.classList.add("task__delete-btn");
@@ -77,20 +92,20 @@ function createTask(inputValue, descriptionValue = "", dateValue = "no-date") {
     const footer = document.createElement("div");
     footer.classList.add("task__footer");
 
-    const descriptionReduced = document.createElement("div");
-    descriptionReduced.classList.add("task__description-reduced");
-    descriptionReduced.textContent = descriptionValue;
+    const taskDescriptionReduced = document.createElement("div");
+    taskDescriptionReduced.classList.add("task__description-reduced");
+    taskDescriptionReduced.textContent = description;
 
-    const description = document.createElement("div");
-    description.classList.add("task__description");
-    if (descriptionValue.length > DESC_MAX_LENGTH) {
-        description.textContent = descriptionValue.slice(0, DESC_MAX_LENGTH + 1) + "...";
-    } else {description.textContent = descriptionValue}
+    const taskDescription = document.createElement("div");
+    taskDescription.classList.add("task__description");
+    if (description.length > DESC_MAX_LENGTH) {
+        taskDescription.textContent = description.slice(0, DESC_MAX_LENGTH + 1) + "...";
+    } else {taskDescription.textContent = description}
 
 
-    footer.append(description);
-    footer.append(descriptionReduced);
-    if (description.textContent === '') footer.classList.add("display-none");
+    footer.append(taskDescription);
+    footer.append(taskDescriptionReduced);
+    if (taskDescription.textContent === '') footer.classList.add("display-none");
 
     task.append(header, footer);
 
@@ -180,15 +195,6 @@ for (const openElement of openElements) {
     }
 }
 
-function dragFunction(event, openElement) {
-    openElement.style.top = event.clientY + 'px';
-    openElement.style.left = event.clientX + 'px';
-}
-
-function stopDrapFunction(openElement) {
-    openElement.classList.remove("drag");
-    document.removeEventListener()
-}
 
 
 
@@ -244,7 +250,7 @@ function addTaskHandler(event) {
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
     const taskDate = addTaskPopup.querySelector(".active");
-    const task = createTask(taskTitle.value, taskDescription.value, taskDate.textContent);
+    const task = createTask({title: taskTitle.value, description: taskDescription.value, date: taskDate.textContent});
     // сдлеать clear либо в закрытии окна    либо здесь
     taskTitle.value = "";
     taskTitle.classList.remove("error");
@@ -319,5 +325,3 @@ completedTaskHeader.addEventListener("click", () => {
     symbol.textContent = symbol.textContent === "+" ? "-" : "+";
     completedTaskList.classList.toggle("show");
 })
-
-fetch("json/tasks.json").then(response => response.json().then(tasks => taskList.append(createTask(tasks[0].title, tasks[0].description, tasks[0].date))));
