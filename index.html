@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- !возможно плохая идея каждый раз добавлять и удалять слушатели событий - не особо экономим -->
     <!-- TODO сделать drag'n'drop -->
+    <!-- TODO nocontent pseudo -->  
+    <!-- TODO word wrap -->
+    <!-- TODO когда много тасок появляется прокрутка у контейнера задач изза max-height: 500px и они прокручиваются вместе с заголовком + нижняя часть приклеена к низу страницы -->
     <div class="wrapper">
         <div class="container">
             <div class="to-do-list">
@@ -52,31 +56,36 @@
         <div class="popup__body">
             <div class="popup__content">
                 <button class="popup__close close-popup">+</button>
-                <input type="text" class="popup__task-title" placeholder="Task">
-                <textarea class="popup__task-description" name="" id="" placeholder="Task description"></textarea>
-                <!-- <div class="popup__task-date">today</div> -->
-                <div class="popup__date-picker">
-                    <button id="today" class="popup__date-btn active">today</button>
-                    <button id="tomorrow" class="popup__date-btn">tomorrow</button>
-                    <button id="no-date" class="popup__date-btn">no-date</button>
-                </div>
-                <button id="add-task-popup-btn" class="popup__add close-popup">Add</button>
+                <form action="" class="popup__form">
+                    <input type="text" class="popup__task-title" placeholder="Task">
+                    <textarea class="popup__task-description" name="" id="" placeholder="Task description"></textarea>
+                    <input type="date" class="popup__calendar">
+                    <div class="popup__date-options">
+                        <button type="button" id="today" class="popup__date-btn">today</button>
+                        <button type="button" id="tomorrow" class="popup__date-btn">tomorrow</button>
+                        <button type="button" id="no-date" class="popup__date-btn active">no-date</button>
+                    </div>
+                    <button type="button" id="add-task-popup-btn" class="popup__add close-popup">Add</button>
+                </form>
             </div>
         </div>
     </div>
+    <!-- ? нужен ли такой же попап -->
     <div id="edit-task-popup" class="popup">
         <div class="popup__body">
             <div class="popup__content">
                 <button class="popup__close close-popup">+</button>
-                <input type="text" class="popup__task-title" placeholder="Task">
-                <textarea class="popup__task-description" name="" id="" placeholder="Task description"></textarea>
-                <div class="popup__date-picker">
-                    <button id="today" class="popup__date-btn">today</button>
-                    <button id="tomorrow" class="popup__date-btn">tomorrow</button>
-                    <button id="no-date" class="popup__date-btn">no-date</button>
-                </div>
-                <!-- <input class="popup__task-date" type="checkbox">today</input> -->
-                <button id="edit-task-popup-btn" class="popup__add close-popup">Edit</button>
+                <form action="" class="popup__form">
+                    <input type="text" class="popup__task-title" placeholder="Task">
+                    <textarea class="popup__task-description" name="" id="" placeholder="Task description"></textarea>
+                    <input type="date" class="popup__calendar">
+                    <div class="popup__date-options">
+                        <button type="button" id="today" class="popup__date-btn">today</button>
+                        <button type="button" id="tomorrow" class="popup__date-btn">tomorrow</button>
+                        <button type="button" id="no-date" class="popup__date-btn">no-date</button>
+                    </div>
+                    <button type="button" id="edit-task-popup-btn" class="popup__add close-popup">Edit</button>
+                </form>
             </div>
         </div>
     </div>

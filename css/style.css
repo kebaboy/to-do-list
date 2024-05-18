@@ -362,9 +362,19 @@ body {
   justify-content: center;
   padding: 30px 10px;
 }
+.popup__calendar {
+  display: inline-flex;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  align-self: flex-start;
+  padding: 10px;
+  border-radius: 25px;
+  color: rgba(0, 0, 0, 0.5);
+}
 .popup__content {
   flex: 0 1 600px;
   background-color: white;
+  border-radius: 10px;
   min-height: 300px;
   display: flex;
   flex-direction: column;
@@ -374,6 +384,11 @@ body {
   opacity: 0;
   transition: all 0.3s ease 0s;
   transform: perspective(600px) translate(0px, -100%) rotateX(45deg);
+}
+.popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .popup__task-title {
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -392,16 +407,15 @@ body {
   border-radius: 10px;
   color: rgba(0, 0, 0, 0.5);
 }
-.popup__date-picker {
+.popup__date-options {
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
-  align-self: center;
   overflow: hidden;
   border-radius: 25px;
   margin: 0px 0px 15px 0px;
 }
-.popup__date-picker .active {
+.popup__date-options .active {
   background-color: rgba(128, 128, 128, 0.668);
 }
 .popup__date-btn {

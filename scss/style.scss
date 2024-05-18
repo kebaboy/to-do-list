@@ -386,11 +386,22 @@ body {
         padding: 30px 10px;
     }
 
+    &__calendar {
+        display: inline-flex;
+        background-color: rgba(0,0,0,0.1);
+        font-size: 20px;
+        align-self: flex-start;
+        padding: 10px;
+        border-radius: 25px;
+        color: rgba(0,0,0,0.5);
+    }
+
     // .popup__content
 
     &__content {
         flex: 0 1 600px;
         background-color: white;
+        border-radius: 10px;
         min-height: 300px;
         display: flex;
         flex-direction: column;
@@ -400,6 +411,12 @@ body {
         opacity: 0;
         transition: all 0.3s ease 0s;
         transform: perspective(600px) translate(0px, -100%) rotateX(45deg);
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     // .popup__task-title
@@ -428,10 +445,9 @@ body {
 
     // .popup__date-picker
 
-    &__date-picker {
+    &__date-options {
         display: flex;
         width: fit-content;
-        align-self: center;
         overflow: hidden;
         // border-radius: 15px;
         // border: 1px solid #000;

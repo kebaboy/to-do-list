@@ -1,9 +1,9 @@
-const TASKS__URL = "json/tasks.json";
+const TASKS_URL = "json/tasks.json";
 const taskList = document.querySelector(".tasks__list");
-
+// window.onload
 async function uploadTasks() {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    let response = await fetch(TASKS__URL);
+    let response = await fetch(TASKS_URL);
     let tasks = await response.json();
     tasks.forEach(taskObj => {
         let task = createTask(taskObj);
@@ -56,7 +56,6 @@ function addTask() {
     }
 }
 
-// можно заменить на объект и = {}
 function createTask({title, description = "", date = "no-date"}) {
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
@@ -203,7 +202,18 @@ for (const openElement of openElements) {
 function constructPopup(task) {
     editTaskPopup.querySelector(".popup__task-title").value = task.querySelector(".task__title").textContent;
     editTaskPopup.querySelector(".popup__task-description").value = task.querySelector(".task__description-reduced").textContent;
-    editTaskPopup.querySelector(`#${task.querySelector(".task__date").textContent}`).classList.add("active");
+    let activeOption = null;
+    try {
+        activeOption = editTaskPopup.querySelector(`#${task.querySelector(".task__date").textContent}`);
+    } catch {
+    }
+    
+    console.log(activeOption);
+    if (activeOption) {
+        activeOption.classList.add("active");
+        console.log(activeOption.id);
+    } else editTaskPopup.querySelector(".popup__calendar").value = task.querySelector(".task__date").textContent;
+    // editTaskPopup.querySelector(`#${task.querySelector(".task__date").textContent}`).classList.add("active");
 }
 
 
@@ -214,17 +224,54 @@ function openPopup(currentPopup) {
         else if (closeElement.id === "edit-task-popup-btn") closeElement.addEventListener("click", editTaskHandler);
         else closeElement.addEventListener("click", closePopupHandler);
     }
-    const datePicker = currentPopup.querySelector(".popup__date-picker");  
+    // ?.
+    const datePicker = currentPopup.querySelector(".popup__date-options"); 
     if (datePicker) datePicker.addEventListener("click", pickDateHandler);
+    const dateInput = currentPopup.querySelector(".popup__calendar");
+    if (dateInput) dateInput.addEventListener("change", () => clearDateOptions(datePicker));
+    if (currentPopup.id === "edit-task-popup") {
+        currentPopup.querySelector(".active")?.click();
+    }
     
     currentPopup.classList.add("open");
     currentPopup.addEventListener("mousedown", outsidePopupClickHandler)
 }
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function setInputDate(targetDateBtn) {
+    const id = targetDateBtn.id;
+    const input = targetDateBtn.closest(".popup").querySelector(".popup__calendar");
+    switch(id) {
+        case 'today':
+            input.value = formatDate(new Date());
+            break;
+        case 'tomorrow':
+            const date = new Date();
+            date.setDate(date.getDate() + 1)
+            input.value = formatDate(date);
+            break;
+        case 'no-date':
+            input.value = '';
+            break;
+    }
+}
+
+function clearDateOptions(datePicker) {
+    datePicker.querySelector(".active")?.classList.remove("active");
+}
+
 function pickDateHandler(e) {
-    const activeDateBtn = e.target.closest(".popup__date-picker").querySelector(".active");
+    const activeDateBtn = e.target.closest(".popup__date-options").querySelector(".active");
     if (activeDateBtn) activeDateBtn.classList.remove("active");
-    e.target.classList.add("active");
+    const targetDateBtn = e.target;
+    setInputDate(targetDateBtn);
+    targetDateBtn.classList.add("active");
 }
 
 function outsidePopupClickHandler(e) {
@@ -251,14 +298,15 @@ function addTaskHandler(event) {
     if (!validateTask(event)) return;
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
-    const taskDate = addTaskPopup.querySelector(".active");
-    const task = createTask({title: taskTitle.value, description: taskDescription.value, date: taskDate.textContent});
+    const taskDate = addTaskPopup.querySelector(".popup__calendar");
+    const task = createTask({title: taskTitle.value, description: taskDescription.value, date: addTaskPopup.querySelector(".active")?.textContent || taskDate.value});
     // сдлеать clear либо в закрытии окна    либо здесь
     taskTitle.value = "";
     taskTitle.classList.remove("error");
     taskDescription.value = "";
-    addTaskPopup.querySelector(".active").classList.remove("active");
-    addTaskPopup.querySelector("#today").classList.add("active");
+    taskDate.value = "";
+    addTaskPopup.querySelector(".active")?.classList.remove("active");
+    addTaskPopup.querySelector("#no-date").classList.add("active");
     taskList.append(task);
     closePopupHandler(event);
 }
@@ -277,13 +325,15 @@ function editTaskHandler(event) {
         description.textContent.trim() ? description.closest(".task__footer").classList.remove("display-none") : description.closest(".task__footer").classList.add("display-none");
     
         const dateBtn = editTaskPopup.querySelector(".active");
-        selectedTask.querySelector(".task__date").textContent = dateBtn.textContent;
-        if (dateBtn.textContent !== "no-date" & selectedTask.querySelector(".task__date").classList.contains("display-none")) {
-            selectedTask.querySelector(".task__date").classList.remove("display-none");
-        } else if (dateBtn.textContent === "no-date" & !selectedTask.querySelector(".task__date").classList.contains("display-none")) {
-            selectedTask.querySelector(".task__date").classList.add("display-none");
-        }
-        selectedTask.classList.remove("selected");   
+        if (dateBtn) {
+            selectedTask.querySelector(".task__date").textContent = dateBtn.textContent;
+            if (dateBtn.textContent !== "no-date" & selectedTask.querySelector(".task__date").classList.contains("display-none")) {
+                selectedTask.querySelector(".task__date").classList.remove("display-none");
+            } else if (dateBtn.textContent === "no-date" & !selectedTask.querySelector(".task__date").classList.contains("display-none")) {
+                selectedTask.querySelector(".task__date").classList.add("display-none");
+            }
+            selectedTask.classList.remove("selected");   
+        } else selectedTask.querySelector(".task__date").textContent = editTaskPopup.querySelector(".popup__calendar").value;
     }
     closePopupHandler(event);
 }
@@ -303,13 +353,16 @@ function closePopup(currentPopup) {
         else closeElement.removeEventListener("click", closePopupHandler);
     }
     if (currentPopup.id === "edit-task-popup") {
-        currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
-        currentPopup.querySelector(".active").classList.remove("active");
+        currentPopup.querySelector(".popup__date-options").removeEventListener("click", pickDateHandler);
+        currentPopup.querySelector(".popup__calendar").removeEventListener("click", clearDateOptions);
+        currentPopup.querySelector(".active")?.classList.remove("active");
         const selectedTask = document.querySelector(".selected");
         if (selectedTask) selectedTask.classList.remove("selected");
     }
     if (currentPopup.id === "add-task-popup") {
-        currentPopup.querySelector(".popup__date-picker").removeEventListener("click", pickDateHandler);
+        // поч здесь обнуляем только когда таска добавляется
+        currentPopup.querySelector(".popup__date-options").removeEventListener("click", pickDateHandler);
+        currentPopup.querySelector(".popup__calendar").removeEventListener("click", clearDateOptions);
     }
     currentPopup.removeEventListener("mousedown", outsidePopupClickHandler);
 }
