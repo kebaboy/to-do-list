@@ -1,10 +1,16 @@
+import { Storage } from "./managers/Storage.js";
+
+
+
 const TASKS_URL = "json/tasks.json";
 const taskList = document.querySelector(".tasks__list");
 // window.onload
 async function uploadTasks() {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    let response = await fetch(TASKS_URL);
-    let tasks = await response.json();
+    // let response = await fetch(TASKS_URL);
+    // let tasks = await response.json();
+    const tasks = Storage.getTasks();
+    console.log(tasks);
     tasks.forEach(taskObj => {
         let task = createTask(taskObj);
         taskList.append(task);
@@ -15,7 +21,7 @@ async function uploadTasks() {
 
 
 const date = document.querySelector(".to-do-list__day-month-year");
-const time = document.querySelector(".to-do-list__time")
+const time = document.querySelector(".to-do-list__time");
 
 function updateTimeAndDate() {
     let dateObj = new Date();
@@ -48,15 +54,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function addTask() {
     if (taskInput.value.trim() !== "") {
-        const task = createTask({title: taskInput.value});
+        const taskObj = {id: Storage.generateTaskId(), title: taskInput.value}; 
+        const task = createTask(taskObj);
         taskList.append(task);
+        Storage.addTask(taskObj);
         taskInput.value = "";
     } else {
         openPopup(addTaskPopup);
     }
 }
 
-function createTask({title, description = "", date = "no-date"}) {
+// просто task object передаем
+function createTask({id, title, description = "", date = "no-date"}) {
     const task = document.createElement("li");
     task.classList.add("tasks__task", "task", "open-popup");
     task.dataset.popup = "edit-task-popup";
@@ -81,6 +90,8 @@ function createTask({title, description = "", date = "no-date"}) {
         taskDeleteButton.closest(".task__header").classList.add("deleted");
         setTimeout(function() {
             const task = taskDeleteButton.closest(".task");
+            console.log(id);
+            Storage.removeTask(id);
             taskDeleteButton.closest(".task").remove();
             completedTaskList.append(task);
             const count = completedTasks.length;
@@ -299,7 +310,9 @@ function addTaskHandler(event) {
     const taskTitle = addTaskPopup.querySelector(".popup__task-title");
     const taskDescription = addTaskPopup.querySelector(".popup__task-description");
     const taskDate = addTaskPopup.querySelector(".popup__calendar");
-    const task = createTask({title: taskTitle.value, description: taskDescription.value, date: addTaskPopup.querySelector(".active")?.textContent || taskDate.value});
+    const taskObj = {id: Storage.generateTaskId(), title: taskTitle.value, description: taskDescription.value, date: addTaskPopup.querySelector(".active")?.textContent || taskDate.value};
+    Storage.addTask(taskObj);
+    const task = createTask(taskObj);
     // сдлеать clear либо в закрытии окна    либо здесь
     taskTitle.value = "";
     taskTitle.classList.remove("error");
